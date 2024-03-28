@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as rssParser from "react-native-rss-parser";
 import {
-  Button,
   FlatList,
   Text,
   StyleSheet,
@@ -18,10 +17,11 @@ import {
 
 interface Props {
   feedUrl: string;
+  isGetFeed: boolean;
 }
 
 const GetFeed: React.FC<Props> = (props) => {
-  const { feedUrl } = props;
+  const { feedUrl, isGetFeed } = props;
   const [feedItems, setFeedItems] = useState<
     Array<{
       title: string;
@@ -31,7 +31,7 @@ const GetFeed: React.FC<Props> = (props) => {
     }>
   >([]);
 
-  const fetchFeed = () => {
+  if (isGetFeed === true) {
     fetch(feedUrl)
       .then((response) => response.text())
       .then((responseData) => rssParser.parse(responseData))
@@ -49,34 +49,35 @@ const GetFeed: React.FC<Props> = (props) => {
           { text: "OK" },
         ]),
       );
-  };
+  }
   return (
     <>
-      <Button onPress={fetchFeed} title="get" />
-      <FlatList
-        data={feedItems}
-        renderItem={({ item }) => (
-          <View style={styles.content}>
-            <Pressable onPress={() => Linking.openURL(item.link)}>
-              {item.image != undefined && (
-                <Image
-                  source={{ uri: item.image }}
-                  resizeMode="contain"
-                  style={{
-                    width: wp("90%"),
-                    height: hp("30%"),
-                  }}
-                />
-              )}
-              <Text style={item.authors ? styles.title : styles.noImage}>
-                {item.title}
-                {"\n"}
-                {item.authors}
-              </Text>
-            </Pressable>
-          </View>
-        )}
-      />
+      <View style={styles.content}>
+        <FlatList
+          data={feedItems}
+          renderItem={({ item }) => (
+            <View style={styles.content}>
+              <Pressable onPress={() => Linking.openURL(item.link)}>
+                {item.image != undefined && (
+                  <Image
+                    source={{ uri: item.image }}
+                    resizeMode="contain"
+                    style={{
+                      width: wp("90%"),
+                      height: hp("30%"),
+                    }}
+                  />
+                )}
+                <Text style={item.authors ? styles.title : styles.noImage}>
+                  {item.title}
+                  {"\n"}
+                  {item.authors}
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        />
+      </View>
     </>
   );
 };
@@ -84,7 +85,6 @@ export default GetFeed;
 
 const styles = StyleSheet.create({
   content: {
-    width: wp("90%"),
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
