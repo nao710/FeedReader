@@ -3,6 +3,7 @@ import { StyleSheet, Text, Pressable, View } from "react-native";
 import Dialog from "react-native-dialog";
 import RNPickerSelect from "react-native-picker-select";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useColorScheme } from "react-native";
 
 interface Props {
   feedUrl: string;
@@ -18,16 +19,13 @@ const InputUrl: React.FC<Props> = (props) => {
     Array<{ label: string; value: string }>
   >([]);
 
+  const colorMode = useColorScheme();
+
   useEffect(() => {
     saveData(feedUrl);
   }, [feedUrl]);
 
   setTimeout(() => getData(), 1000);
-
-  const setUrl = (url: string) => {
-    setFeedUrl(url);
-    getFeed;
-  };
 
   const saveData = async (url: string) => {
     if (url) {
@@ -65,12 +63,18 @@ const InputUrl: React.FC<Props> = (props) => {
             <Text style={styles.text}>GetFeed</Text>
           </Pressable>
         </View>
-        <RNPickerSelect onValueChange={(url) => setUrl(url)} items={localUrl} />
+        <RNPickerSelect
+          onValueChange={(url) => setFeedUrl(url)}
+          items={localUrl}
+        />
       </View>
       <View>
         <Dialog.Container visible={visible}>
-          <Dialog.Title>Add Feed URL</Dialog.Title>
+          <Dialog.Title style={{ color: colorMode ? "#000000" : "#ffffff" }}>
+            Add Feed URL
+          </Dialog.Title>
           <Dialog.Input
+            style={{ color: colorMode ? "#000000" : "#ffffff" }}
             placeholder="input URL"
             value={getUrl}
             onChangeText={(url) => setGetUrl(url)}
