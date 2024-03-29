@@ -61,6 +61,9 @@ const InputUrl: React.FC<Props> = (props) => {
           <Pressable style={styles.Button} onPress={() => setVisible(true)}>
             <Text style={styles.text}>Add URL</Text>
           </Pressable>
+          <Pressable onPress={getFeed} style={styles.Button}>
+            <Text style={styles.text}>GetFeed</Text>
+          </Pressable>
         </View>
         <RNPickerSelect onValueChange={(url) => setUrl(url)} items={localUrl} />
       </View>
