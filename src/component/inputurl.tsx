@@ -62,6 +62,9 @@ const InputUrl: React.FC<Props> = (props) => {
           <Pressable onPress={getFeed} style={styles.Button}>
             <Text style={styles.text}>GetFeed</Text>
           </Pressable>
+          <Pressable style={styles.Button} onPress={() => AsyncStorage.clear()}>
+            <Text style={styles.text}>Clrar URL</Text>
+          </Pressable>
         </View>
         <RNPickerSelect
           onValueChange={(url) => setFeedUrl(url)}
