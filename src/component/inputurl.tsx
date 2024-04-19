@@ -63,7 +63,7 @@ const InputUrl: React.FC<Props> = (props) => {
             <Text style={styles.text}>GetFeed</Text>
           </Pressable>
           <Pressable style={styles.Button} onPress={() => AsyncStorage.clear()}>
-            <Text style={styles.text}>Clrar URL</Text>
+            <Text style={styles.text}>Clear URL</Text>
           </Pressable>
         </View>
         <RNPickerSelect
